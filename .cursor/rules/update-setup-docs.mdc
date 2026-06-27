@@ -1,0 +1,47 @@
+---
+description: Keep docs/setup.md and docs/setup.th.md in sync when the project changes
+alwaysApply: true
+---
+
+# Update Setup Documentation
+
+When you change the project in ways that affect setup, usage, or structure, also update **both**:
+
+- `docs/setup.md` (English)
+- `docs/setup.th.md` (Thai)
+
+Keep both files aligned — same sections and facts, only the language differs.
+
+## When to update
+
+Update the setup docs when you change any of:
+
+- `package.json` scripts, dependencies, or devDependencies
+- Environment variables (e.g. `.env.local`, `process.env`, Supabase config)
+- Project folder structure (new or removed top-level dirs, major `app/` routes)
+- Main routes or page purposes
+- Prerequisites or runtime requirements (Node version, external services)
+- Build, dev, or deployment workflow
+
+## What to update
+
+Match the existing sections in the setup docs:
+
+1. Prerequisites
+2. Installation
+3. Environment Variables
+4. Running the Project (dev and production)
+5. Available Scripts
+6. Tech Stack (versions from `package.json`)
+7. Project Structure
+8. Main Routes
+9. Troubleshooting (if new common issues appear)
+
+## Workflow
+
+1. Make the project change.
+2. Update `docs/setup.md` in English.
+3. Update `docs/setup.th.md` with the same content in Thai.
+4. Preserve cross-links at the top of each file.
+
+Do not skip the docs update as part of the same task — treat it as required, not optional.

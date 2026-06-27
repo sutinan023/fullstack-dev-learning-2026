@@ -1,15 +1,16 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getUser } from "@/libs/authentication";
+import supabase from "@/libs/supabase";
 
 const routes = [
   { name: "Home", href: "/" },
-  { name: "Users", href: "/users" },
-  { name: "Products", href: "/products" },
+  { name: "Songs", href: "/songs" },
+  { name: "Artists", href: "/artists" },
+  { name: "History", href: "/history" },
 ];
-
-const user = {
-  name: "Alex Rivera",
-  avatarUrl: "https://i.pravatar.cc/64?img=12",
-};
 
 function Logo() {
   return (
@@ -31,8 +32,28 @@ function Logo() {
 }
 
 export default function Navbar() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    getUser().then(setUser);
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const name =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.user_name ||
+    user?.email;
+  const avatarUrl = user?.user_metadata?.avatar_url;
+
   return (
-    <nav className="bg-slate-900 text-slate-300 px-6 py-3 flex items-center justify-between">
+    <nav className="bg-slate-950 text-slate-300 px-6 py-3 flex items-center justify-between">
       <div className="flex items-center gap-8">
         <Logo />
         <ul className="flex items-center gap-1">
@@ -40,7 +61,7 @@ export default function Navbar() {
             <li key={route.href}>
               <a
                 href={route.href}
-                className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors hover:text-white"
+                className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors hover:bg-slate-800 hover:text-white"
               >
                 {route.name}
               </a>
@@ -49,16 +70,21 @@ export default function Navbar() {
         </ul>
       </div>
 
-      <div className="flex items-center gap-4">
-        <Image
-          src={user.avatarUrl}
-          alt={user.name}
-          width={32}
-          height={32}
-          unoptimized
-          className="rounded-full"
-        />
-      </div>
+      {user && (
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium text-white">{name}</span>
+          {avatarUrl && (
+            <Image
+              src={avatarUrl}
+              alt={name ?? "User avatar"}
+              width={32}
+              height={32}
+              unoptimized
+              className="rounded-full"
+            />
+          )}
+        </div>
+      )}
     </nav>
   );
 }

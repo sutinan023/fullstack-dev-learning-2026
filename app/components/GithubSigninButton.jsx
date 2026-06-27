@@ -10,20 +10,30 @@ export default function GithubSignInButton() {
     const [user, setUser] = useState(null);
     useEffect(() => {
         getUser().then(res => setUser(res))
-    }, [user])
+    }, [])
+
+    async function handleSignIn() {
+        await signInWithGithub()
+    }
+
+    async function handleSignOut() {
+        await signOut()
+        setUser(null)
+    }
+
     return (
         <div>
             {
                 user ?
                     (<button
                         className={className.button}
-                        onClick={() => signOut()}>
+                        onClick={handleSignOut}>
                         Logout
                     </button >
                     ) : (
                         <button
                             className={className.button}
-                            onClick={() => signInWithGithub()}>
+                            onClick={handleSignIn}>
                             Login with Github
                         </button>
                     )
