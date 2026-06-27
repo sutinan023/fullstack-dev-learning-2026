@@ -58,7 +58,7 @@ export default function ArtistCreate() {
             className={className.input}
           />
         </div>
-        {/* {state?.error && <p className={className.error}>{state.error}</p>} */}
+        {state?.error && <p className={className.error}>{state.error}</p>}
         <div className="flex justify-end mt-2">
           <button type="submit" className={className.submit}>
             {/* {pending ? 'Saving...' : 'Create Artist'} */}

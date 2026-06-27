@@ -1,5 +1,5 @@
-import supabase from "@/libs/supabase";
-import {notFound, redirect } from 'next/navigation';
+import artistModel from "@/libs/models/artists";
+import { redirect } from 'next/navigation';
 const className = {
   card: "card rounded-2xl shadow-md bg-white max-w-md mx-auto mt-3 p-6",
   title: "text-xl font-bold mb-4 text-black text-left",
@@ -19,10 +19,7 @@ export default function ArtistForm() {
       genre: formData.get("genre"),
       image: formData.get("image"),
     }
-    const { data,error} = await supabase.from('artists')
-        .insert(inputData)
-        .select();
-        console.log(data,error)
+    const { data } = await artistModel.create(inputData);
     if(data){
         return redirect(`/artists/${data.id}`)
     }
@@ -67,7 +64,6 @@ export default function ArtistForm() {
             className={className.input}
           />
         </div>
-        {state?.error && <p className={className.error}>{state.error}</p>}
         <div className="flex justify-end mt-2">
           <button type="submit" className={className.submit}>
             Create Artist

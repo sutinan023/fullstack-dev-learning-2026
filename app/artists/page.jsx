@@ -3,7 +3,7 @@ import Card from "@/app/components/Card";
 import Button from "@/app/components/Button";
 import artistModel from "@/libs/models/artists";
 import Link from "next/link";
-import {notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 
 export default async function Artists() {

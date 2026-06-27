@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 function Card({ imgUrl, title, description, children }) {
   const className = {
     card: "flex m-3 bg-white rounded-3xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden border border-slate-100",
